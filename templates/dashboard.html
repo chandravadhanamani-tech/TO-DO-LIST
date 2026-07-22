@@ -1,0 +1,288 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold">
+            Welcome, {{ user.username }} 👋
+        </h2>
+
+        <p class="text-muted">
+            Manage your daily tasks efficiently.
+        </p>
+    </div>
+
+    <a href="{{ url_for('add_task') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Add Task
+    </a>
+
+</div>
+
+<!-- Dashboard Cards -->
+
+<div class="row">
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card shadow border-0 bg-primary text-white">
+
+            <div class="card-body">
+
+                <h5>Total Tasks</h5>
+
+                <h1>{{ total }}</h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card shadow border-0 bg-success text-white">
+
+            <div class="card-body">
+
+                <h5>Completed</h5>
+
+                <h1>{{ completed }}</h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card shadow border-0 bg-warning">
+
+            <div class="card-body">
+
+                <h5>Pending</h5>
+
+                <h1>{{ pending }}</h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Progress -->
+
+<div class="card shadow mb-4">
+
+    <div class="card-body">
+
+        <h5>Task Progress</h5>
+
+        {% if total > 0 %}
+            {% set percent = (completed * 100 / total)|round|int %}
+        {% else %}
+            {% set percent = 0 %}
+        {% endif %}
+
+        <div class="progress" style="height:25px;">
+
+            <div class="progress-bar bg-success"
+                 role="progressbar"
+                 style="width: {{ percent }}%;">
+
+                {{ percent }}%
+
+            </div>
+
+        </div>
+
+        <small class="text-muted">
+
+            {{ completed }} of {{ total }} tasks completed
+
+        </small>
+
+    </div>
+
+</div>
+<!-- Search Box -->
+
+<div class="my-4">
+
+    <input
+        type="text"
+        id="searchInput"
+        class="form-control"
+        placeholder="🔍 Search Tasks...">
+
+</div>
+<div class="mb-3">
+
+    <button class="btn btn-outline-primary filter-btn" data-filter="all">
+        All
+    </button>
+
+    <button class="btn btn-outline-warning filter-btn" data-filter="Pending">
+        Pending
+    </button>
+
+    <button class="btn btn-outline-success filter-btn" data-filter="Completed">
+        Completed
+    </button>
+
+</div>
+
+<!-- Task Table -->
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-hover align-middle" id="taskTable">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Title</th>
+
+<th>Description</th>
+
+<th>Priority</th>
+
+<th>Due Date</th>
+
+<th>Status</th>
+
+<th width="220">Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for task in tasks %}
+
+<tr>
+
+<td>{{ task.title }}</td>
+
+<td>{{ task.description }}</td>
+
+<td>
+
+{% if task.priority=="High" %}
+
+<span class="badge bg-danger">
+
+High
+
+</span>
+
+{% elif task.priority=="Medium" %}
+
+<span class="badge bg-warning text-dark">
+
+Medium
+
+</span>
+
+{% else %}
+
+<span class="badge bg-success">
+
+Low
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+{{ task.due_date }}
+
+</td>
+
+<td>
+
+{% if task.status=="Completed" %}
+
+<span class="badge bg-success">
+
+Completed
+
+</span>
+
+{% else %}
+
+<span class="badge bg-secondary">
+
+Pending
+
+</span>
+
+{% endif %}
+
+</td>
+
+<td>
+
+<a href="{{ url_for('edit_task', id=task.id) }}"
+class="btn btn-warning btn-sm">
+
+<i class="bi bi-pencil-square"></i>
+
+</a>
+
+<a href="{{ url_for('delete_task', id=task.id) }}"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Delete this task?')">
+
+<i class="bi bi-trash"></i>
+
+</a>
+
+{% if task.status!="Completed" %}
+
+<a href="{{ url_for('complete_task', id=task.id) }}"
+class="btn btn-success btn-sm">
+
+<i class="bi bi-check-lg"></i>
+
+</a>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+
+<td colspan="6" class="text-center text-muted">
+
+No Tasks Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}
