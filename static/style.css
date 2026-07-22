@@ -1,0 +1,75 @@
+dark-mode{
+
+    background:#121212 !important;
+
+    color:white !important;
+
+}
+
+.dark-mode .navbar{
+
+    background:#1f1f1f !important;
+
+}
+
+.dark-mode .card{
+
+    background:#1e1e1e !important;
+
+    color:white;
+
+}
+
+.dark-mode .table{
+
+    color:white;
+
+}
+
+.dark-mode .table-dark{
+
+    background:#333;
+
+}
+
+.dark-mode footer{
+
+    color:#ccc !important;
+
+}
+
+.dark-mode input{
+
+    background:#2c2c2c;
+
+    color:white;
+
+    border:1px solid #555;
+
+}
+
+.dark-mode .form-control{
+
+    background:#2c2c2c;
+
+    color:white;
+
+}
+
+.dark-mode .form-control::placeholder{
+
+    color:#bbb;
+
+}
+
+.dark-mode .btn-outline-primary{
+
+    color:white;
+
+}
+
+.dark-mode .table tbody tr:hover{
+
+    background:#2f2f2f;
+
+}
