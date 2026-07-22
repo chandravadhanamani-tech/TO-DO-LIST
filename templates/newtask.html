@@ -1,0 +1,29 @@
+@app.route('/add_task', methods=['GET', 'POST'])
+@login_required
+def add_task():
+
+    if request.method == "POST":
+
+        task = Task(
+
+            title=request.form['title'],
+
+            description=request.form['description'],
+
+            priority=request.form['priority'],
+
+            due_date=request.form['due_date'],
+
+            user_id=current_user.id
+
+        )
+
+        db.session.add(task)
+
+        db.session.commit()
+
+        flash("Task Added Successfully")
+
+        return redirect(url_for('dashboard'))
+
+    return render_template("add_task.html")
