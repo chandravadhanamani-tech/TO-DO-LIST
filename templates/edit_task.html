@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="card p-4 shadow">
+
+<h2>Edit Task</h2>
+
+<form method="POST">
+
+<label>Title</label>
+
+<input
+type="text"
+name="title"
+value="{{ task.title }}"
+class="form-control"
+required>
+
+<br>
+
+<label>Description</label>
+
+<textarea
+name="description"
+class="form-control">{{ task.description }}</textarea>
+
+<br>
+
+<label>Priority</label>
+
+<select
+name="priority"
+class="form-control">
+
+<option {% if task.priority=="High" %}selected{% endif %}>
+High
+</option>
+
+<option {% if task.priority=="Medium" %}selected{% endif %}>
+Medium
+</option>
+
+<option {% if task.priority=="Low" %}selected{% endif %}>
+Low
+</option>
+
+</select>
+
+<br>
+
+<label>Due Date</label>
+
+<input
+type="date"
+name="due_date"
+value="{{ task.due_date }}"
+class="form-control">
+
+<br>
+
+<button
+class="btn btn-success">
+
+Update Task
+
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}
